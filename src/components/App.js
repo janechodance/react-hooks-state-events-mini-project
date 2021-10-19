@@ -4,30 +4,35 @@ import NewTaskForm from "./NewTaskForm";
 import TaskList from "./TaskList";
 
 import { CATEGORIES, TASKS } from "../data";
-import Task from "./Task";
 console.log("Here's the data you're working with");
 console.log({ CATEGORIES, TASKS });
 
 
 function App() {
-  const [deleteTask, setDeleteTask]= useState("")
-  const [tasksToDisplay, setTasksToDisplay]= useState(TASKS)
-  function setNewDisplay(){
-    setTasksToDisplay((currentTasksToDisplay)=>currentTasksToDisplay.filter(task=> task.text!==deleteTask))
-    }
   
-  function handleDelete(task){
-    setDeleteTask(task)  
-    setNewDisplay()
+  const [tasksToDisplay, setTasksToDisplay]= useState(TASKS)
+ 
+
+  function handleDelete(deleteTask){
+    setTasksToDisplay(tasksToDisplay.filter(task=> task.text!==deleteTask))
+  }
+  function handleAll(){
+    setTasksToDisplay(TASKS)
   }
  
-  console.log(tasksToDisplay)
+  function handleFilter(category){
+    setTasksToDisplay(TASKS.filter(task=> task.category===category))
+  }
+  function onTaskFormSubmit(task){
+    setTasksToDisplay([...tasksToDisplay, task])
+
+  }
   return (
     <div className="App">
       <h2>My tasks</h2>
-      <CategoryFilter />
-      <NewTaskForm />
-      <TaskList TASKS={tasksToDisplay} handleDelete={handleDelete}/>
+      <CategoryFilter categories={CATEGORIES} handleFilter={handleFilter} handleAll={handleAll}/>
+      <NewTaskForm onTaskFormSubmit={onTaskFormSubmit} />
+      <TaskList Tasks={tasksToDisplay} handleDelete={handleDelete} />
     </div>
   );
 }
