@@ -1,11 +1,10 @@
 import React from "react";
 import { findDOMNode } from "react-dom";
 import Task from "./Task";
-function TaskList({Tasks, handleDelete}) {
-  console.log(Tasks)
-  const taskList = Tasks.map((task)=> 
+function TaskList({tasks, handleDelete}) {
+  const taskList = tasks.map((task)=> 
   <li key={task.text}>
-    <Task task={task.text} category={task.category} handleDelete={handleDelete} />
+    <Task text={task.text} category={task.category} handleDelete={handleDelete} />
   </li>)
 
   return (
